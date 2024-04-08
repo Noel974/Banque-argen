@@ -1,0 +1,9 @@
+@import "./Components/Footer/Footer.css";
+@import"./Components/Nav/Nav.css";
+@import "./Components/Hero/Hero.css";
+@import "./Components/Feactures/Feactures.css";
+@import "./Components/Connection/Connection.css";
+@import"./Components/Header/Header.css";
+
+@import "./Body/Body.css";
+@import"./Elements/Elements.css";
