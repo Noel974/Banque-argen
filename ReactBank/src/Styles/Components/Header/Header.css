@@ -9,3 +9,8 @@
     font-weight: bold;
     padding: 10px;
   }
+  
+  .editName::placeholder {
+    font: lighter;
+    color: red;
+  }

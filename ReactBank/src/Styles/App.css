@@ -4,6 +4,9 @@
 @import "./Components/Feactures/Feactures.css";
 @import "./Components/Connection/Connection.css";
 @import"./Components/Header/Header.css";
+@import"./Components/Account/Account.css";
+
+@import"./Composant/Edit.css";
 
 @import "./Body/Body.css";
 @import"./Elements/Elements.css";
