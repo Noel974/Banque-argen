@@ -1,4 +1,5 @@
 .footer {
+  position: static;
     display: flex;
     justify-content: center;
     border-top: 2px solid #ccc;
@@ -9,3 +10,9 @@
     margin: 0;
     padding: 0;
   }
+  
+  .clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}

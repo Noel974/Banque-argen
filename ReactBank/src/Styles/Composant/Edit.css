@@ -1,29 +1,21 @@
-.editname{
+.editName {
     display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-.inputBox {
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
-	margin-bottom: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Ajouté pour centrer verticalement */
 }
 
-.inputBox input {
-	width: 180px;
-	height: 30px;
-	padding-left: 10px;
-	margin-top: 10px;
-	border: 2px solid gray;
-	border-radius: 2px;
-	color: #9d9d9d;
+.inputBox {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .btnBox {
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center; /* Ajouté pour centrer horizontalement */
 }
 
 .btnBox button {
@@ -33,4 +25,9 @@
 	color: #00bc77;
 	border: 2px solid #00bc77;
 	border-radius: 2px;
+}
+
+.editName::placeholder {
+	font: lighter;
+	color: red;
 }

@@ -11,3 +11,10 @@
     width: 1px !important;
     white-space: nowrap !important; /* 3 */
 }
+
+.main.bg-dark {
+    background-color: #12002b;
+    position: relative;
+    min-height: 100vh; 
+    padding-bottom: 50px;
+  }

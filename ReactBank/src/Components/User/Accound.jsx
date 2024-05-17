@@ -3,9 +3,10 @@ import AccountData from '../../Assets/Data/Account.json';
 
 const Account = () => {
     return (
-        <section  className="main bg-dark">
+        < >
+            <h2 class="sr-only">Accound</h2>
                     {AccountData.map((account, index) => (
-                <div key={index} className="account">
+                <section key={index} className="account">
                     <div className="account-content-wrapper">
                         <h3 className="account-title">{account.title}</h3>
                         <p className="account-amount">{account.amount}</p>
@@ -14,9 +15,9 @@ const Account = () => {
                     <div className="account-content-wrapper cta">
                         <button className="transaction-button">{account.ctaLabel}</button>
                     </div>
-                </div>
+                </section>
             ))}
-        </section>
+        </>
     );
 };
 

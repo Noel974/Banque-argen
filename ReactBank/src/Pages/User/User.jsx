@@ -1,15 +1,11 @@
 import React from "react";
 
-import Header from "../../Components/User/Hedear";
-import Account from "../../Components/User/Accound";
+import Profil from "../../Components/User/Profil";
+
 
 function UserPages(){
     return (
-        <>
-        <Header/>
-        <Account />
-        </>
-
+        <Profil/>
     )
 }
 export default UserPages;
