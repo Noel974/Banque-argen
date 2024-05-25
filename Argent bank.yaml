@@ -5,10 +5,9 @@ info:
     Remede Agency, une agence spécialisée dans le développement d'applications web.
     Un nouveau projet qui concerne une nouvelle banque qui démarre, Argent Bank, qui essaie de percer dans le secteur et qui a besoin d'aide pour mettre en place son application.
 
-    Phase 2 : Transactions nous sommes encore en phase de conception. De notre côté, nous mettons au point une fonctionnalité pour les transactions qui doit pouvoir permettre aux utilisateurs:
-    
-    - La méthode HTTP (ex. : GET, POST PUT, DELETE.)
-        
+    Phase 2 : Transactions nous sommes encore en phase de conception. De notre côté, nous mettons au point une fonctionnalité pour les transactions qui doit pouvoir permettre aux utilisateurs :
+
+    - La méthode HTTP (ex. : GET, POST, PUT, DELETE.)
   contact:
     email: noelantoine974@outlook.fr
   license:
@@ -16,34 +15,133 @@ info:
   version: 1.0.11
 servers:
   - url: https://localhost:3001/api/v1
-security:
-  - userAuth: []
 
-components:
-  securitySchemes:
-    userAuth:
-      type: apiKey
-      in: header
-      name: Authorization
 paths:
+  /user/login:
+    post:
+      tags:
+        - User Module
+      summary: Login
+      description: API for Login
+      requestBody:
+        description: Login Payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: Login Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /user/signup:
+    post:
+      tags:
+        - User Module
+      summary: Signup
+      description: API for Signup
+      requestBody:
+        description: Signup Payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Signup Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /user/profile:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update user profile attributes
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      responses:
+        '200':
+          description: User profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
   /transactions:
     get:
       security:
-        - userAuth: []
+        - Bearer: []
       tags:
-        - transactions
+        - Transactions
       summary: Récupérer les transactions du mois en cours
       description: |
         Récupère toutes les transactions pour le mois en cours, groupées par compte.
-      operationId: getTransactions
       parameters:
-        - name: month
-          in: query
-          description: Mois pour lequel récupérer les transactions (format YYYY-MM)
-          required: false
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
           schema:
             type: string
-            pattern: '^\d{4}-(0[1-9]|1[0-2])$'
       responses:
         '200':
           description: Transactions récupérées avec succès
@@ -52,19 +150,17 @@ paths:
         '404':
           description: Aucune transaction trouvée pour le mois en cours
 
-  /transactions/{transactionId}:
+  /transactionId:
     get:
       security:
-        - userAuth: []
+        - Bearer: []
       tags:
-        - transactions
-      summary: Récupérer les détails d'une transaction [clik button view]
-      description: |
-        Récupère les détails d'une transaction spécifique.
-      operationId: getTransactionDetails
+        - transactionId
+      summary: Récupérer les détails d'une transaction
+      description: Récupère les détails d'une transaction spécifique.
       parameters:
-        - name: transactionId
-          in: path
+        - in: path
+          name: transactionId
           description: ID de la transaction à récupérer
           required: true
           schema:
@@ -72,74 +168,65 @@ paths:
       responses:
         '200':
           description: Détails de la transaction récupérés avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactionID'
         '404':
           description: La transaction spécifiée n'a pas été trouvée
-
     post:
       security:
-        - userAuth: []
+        - Bearer: []
       tags:
-        - transactions
-      summary: ajouter les détails d'une transaction [clik button edit]
-      description: |
-        Ajouté les détails d'une transaction spécifique.
-      operationId: postTransactionDetails
-      parameters:
-        - name: transactionId
-          in: path
-          description: ID de la transaction à editer
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Ajouts transcation  avec succès
-        '404':
-          description: La transaction spécifiée n'a pas été ajouter
-
-    put:
-      security:
-        - userAuth: []
-      tags:
-        - transactions
-      summary: Mettre à jour les détails d'une transaction [clik button modifier]
-      description: |
-        Met à jour les détails d'une transaction spécifique.
-      operationId: updateTransactionDetails
-      parameters:
-        - name: transactionId
-          in: path
-          description: ID de la transaction à mettre à jour
-          required: true
-          schema:
-            type: string
+        - transactionId
+      summary: Créer une nouvelle transaction
+      description: Crée une nouvelle transaction avec les détails fournis.
       requestBody:
-        description: Nouveaux détails de la transaction
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TransactionInput'
+              $ref: '#/components/schemas/transactionID'
+      responses:
+        '201':
+          description: Transaction créée avec succès
+        '400':
+          description: Données de la transaction invalides
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - transactionId
+      summary: Modifier une transaction
+      description: Modifier une transaction avec les détails fournis.
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID de la transaction à modifier
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/transactionID'
       responses:
         '200':
-          description: Détails de la transaction mis à jour avec succès
+          description: Transaction modifiée avec succès
         '400':
-          description: Mauvaise requête, le format des données est incorrect
-        '404':
-          description: La transaction spécifiée n'a pas été trouvée
-
+          description: Données de la transaction invalides
     delete:
       security:
-        - userAuth: []
+        - Bearer: []
       tags:
-        - transactions
-      summary: Supprimer une transaction [clik button delete]
-      description: |
-        Supprime une transaction spécifique.
-      operationId: deleteTransaction
+        - transactionId
+      summary: Supprimer une transaction
+      description: Supprime une transaction spécifique.
       parameters:
-        - name: transactionId
-          in: path
+        - in: path
+          name: transactionId
           description: ID de la transaction à supprimer
           required: true
           schema:
@@ -152,21 +239,73 @@ paths:
 
 components:
   schemas:
-    TransactionInput:
+    User:
       type: object
       properties:
-        amount:
-          type: number
-          description: Montant de la transaction
-        date:
+        email:
           type: string
-          format: date
-          description: Date de la transaction (format YYYY-MM-DD)
-        description:
+          description: user email
+        password:
           type: string
-          description: Description de la transaction
-        accountId:
+          description: user password
+        firstName:
           type: string
-          description: ID du compte associé à la transaction
-      
-  
+          description: user first name
+        lastName:
+          type: string
+          description: user last name
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          description: user email
+        password:
+          type: string
+          description: user password
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            email:
+              type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    UserProfile:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+    transactionID:
+      type: object
+      properties:
+        id:
+          type: string
+          description: L'ID de la transaction
+        title:
+          type: string
+          description: Le titre de la transaction
+        contenu:
+          type: string
+          description: La description de la transaction
+        total:
+          type: string
+          description: Le montant de la transaction
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

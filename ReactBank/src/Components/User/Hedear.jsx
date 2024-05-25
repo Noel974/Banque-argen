@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <div className="header">
-      <h1>Welcome back<br />{editableUser.firstName} {editableUser.lastName}!</h1>
+      <h1>Welcome back<br />{editableUser.firstName||''} {editableUser.lastName||''}!</h1>
       {isEditing ? (
         <Edit  className="edit-button" user={editableUser} onEditEnd={handleEditEnd} />
       ) : (
