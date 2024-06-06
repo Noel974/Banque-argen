@@ -27,7 +27,7 @@ const Nav = () => {
         {isAuthenticated ? (
           <>
             <NavLink className="main-nav-item" to="/user">
-              <FontAwesomeIcon icon={faUserCircle} />
+              <FontAwesomeIcon className='logo-item' icon={faUserCircle} />
               {user?.firstName || "User"}
             </NavLink>
 
