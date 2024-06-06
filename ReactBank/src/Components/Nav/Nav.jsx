@@ -32,13 +32,13 @@ const Nav = () => {
             </NavLink>
 
             <NavLink onClick={handleUser} className="main-nav-item" to="/">
-              <FontAwesomeIcon icon={faSignOutAlt} />
+              <FontAwesomeIcon  className='logo-item'icon={faSignOutAlt} />
               Sign Out
             </NavLink>
           </>
         ) : (
           <NavLink className="main-nav-item" to="/login"> 
-            <FontAwesomeIcon icon={faUserCircle} />
+            <FontAwesomeIcon className='logo-item' icon={faUserCircle} />
             Sign In
           </NavLink>
         )}
