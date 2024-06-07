@@ -18,6 +18,7 @@ export const LoginUser = async (email, password) => {
         return response.data;
     } catch (error) {
         // Si la requête échoue, renvoyer l'erreur
+        window.alert("Mail ou password incorrecte")
         throw error;
     }
 };

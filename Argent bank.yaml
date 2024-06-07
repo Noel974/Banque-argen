@@ -126,15 +126,15 @@ paths:
         '500':
           description: Internal Server Error
 
-  /transactions:
+  /Accound:
     get:
       security:
         - Bearer: []
       tags:
-        - Transactions
-      summary: Récupérer les transactions du mois en cours
+        - Accound
+      summary: Récupérer les Accound du mois en cours
       description: |
-        Récupère toutes les transactions pour le mois en cours, groupées par compte.
+        Récupère toutes les accounds en cours, groupées par compte.
       parameters:
         - in: header
           name: Authorization
@@ -145,12 +145,18 @@ paths:
       responses:
         '200':
           description: Transactions récupérées avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Accound-user'
         '400':
-          description: Mauvaise requête, le format du mois est incorrect
+          description: Erreur du système
         '404':
-          description: Aucune transaction trouvée pour le mois en cours
+          description: Aucune accound trouvée en cours
 
-  /transactionId:
+  /transactionId/{transactionId}:
     get:
       security:
         - Bearer: []
@@ -161,17 +167,17 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description: ID de la transaction à récupérer
-          required: true
           schema:
             type: string
+          description: Attach transaction ID to URL
+          required: true
       responses:
         '200':
           description: Détails de la transaction récupérés avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/transactionID'
+                $ref: '#/components/schemas/Transaction-id'
         '404':
           description: La transaction spécifiée n'a pas été trouvée
     post:
@@ -181,17 +187,27 @@ paths:
         - transactionId
       summary: Créer une nouvelle transaction
       description: Crée une nouvelle transaction avec les détails fournis.
+      parameters:
+        - in: path
+          name: transactionId
+          schema:
+            type: string
+          description: Creer transaction Id
+          required: true
       requestBody:
+        description: Les détails de la nouvelle transaction
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/transactionID'
+              $ref: '#/components/schemas/Transaction-id'
       responses:
         '201':
           description: Transaction créée avec succès
         '400':
           description: Données de la transaction invalides
+        '500':
+          description: Erreur interne du serveur
     put:
       security:
         - Bearer: []
@@ -202,16 +218,17 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description: ID de la transaction à modifier
-          required: true
           schema:
             type: string
+          description: Attach transaction ID to URL
+          required: true
       requestBody:
+        description: Les détails de la transaction à modifier
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/transactionID'
+              $ref: '#/components/schemas/Transaction-put'
       responses:
         '200':
           description: Transaction modifiée avec succès
@@ -227,10 +244,10 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description: ID de la transaction à supprimer
-          required: true
           schema:
             type: string
+          description: Attach transaction ID to URL
+          required: true
       responses:
         '204':
           description: Transaction supprimée avec succès
@@ -289,21 +306,42 @@ components:
           type: string
         lastName:
           type: string
-    transactionID:
+    Transaction-id:
       type: object
       properties:
         id:
           type: string
-          description: L'ID de la transaction
+        description:
+          type: string
+        amount:
+          type: string
+        balance:
+          type: string
+        category:
+          type: string
+        notes:
+          type: string
+    Transaction-put:
+      type: object
+      properties:
+        category:
+          type: string
+        notes:
+          type: string
+    Accound-user:
+      type: object
+      properties:
+        id:
+          type: string
         title:
           type: string
-          description: Le titre de la transaction
         contenu:
           type: string
-          description: La description de la transaction
+        date:
+          type: string
         total:
           type: string
-          description: Le montant de la transaction
+
   securitySchemes:
     Bearer:
       type: http
