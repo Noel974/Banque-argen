@@ -5,7 +5,7 @@ import { updateUserProfile } from '../Reducer/UserReducer';
 export const updateUserProfileAction = (updatedProfile) => async (dispatch) => {
 	try {
 		const token =
-			localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+			localStorage.getItem("authToken");
 		const response = await updateUserProfileApi(updatedProfile, token);
 		console.log("updateUserProfileApi response:", response);
 		dispatch(updateUserProfile(response.body));

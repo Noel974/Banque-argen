@@ -6,7 +6,7 @@ export const profileAction = () => async (dispatch) => {
 	try {
 		// Récupération du jeton depuis le stockage local
 		const token =
-			localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+			localStorage.getItem("authToken");
 
 		// Appel de l'API UserProfile avec le jeton
 		const response = await UserProfile(token);

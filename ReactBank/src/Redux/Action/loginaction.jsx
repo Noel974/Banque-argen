@@ -22,7 +22,7 @@ export const connexion = (userData) => async (dispatch) => {
 			dispatch(authenticateUser({ token }));
 			
 			// Stockage du jeton dans le stockage local pour une persistance à long terme
-			localStorage.setItem("authToken", token);
+			localStorage.setItem("authToken", token) 
 			
 			// Affichage du jeton dans la console pour le débogage
 			console.log("Authentification réussie. Token :", token);
